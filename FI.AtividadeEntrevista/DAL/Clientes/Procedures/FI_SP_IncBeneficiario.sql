@@ -1,0 +1,9 @@
+﻿CREATE PROC FI_SP_IncBeneficiario
+    @IDCLIENTE     BIGINT,
+	@NOME          VARCHAR (50) ,        
+    @CPF           VARCHAR (11)
+AS
+BEGIN
+	INSERT INTO CLIENTES (IDCLIENTE, NOME, CPF) 
+	VALUES (@IDCLIENTE, @NOME, @CPF)	
+END
