@@ -2,6 +2,7 @@
 $(document).ready(function () {
     if (obj) {
         $('#formCadastro #Nome').val(obj.Nome);
+        $('#formCadastro #CPF').val(obj.CPF);
         $('#formCadastro #CEP').val(obj.CEP);
         $('#formCadastro #Email').val(obj.Email);
         $('#formCadastro #Sobrenome').val(obj.Sobrenome);
@@ -12,6 +13,7 @@ $(document).ready(function () {
         $('#formCadastro #Telefone').val(obj.Telefone);
     }
 
+
     $('#formCadastro').submit(function (e) {
         e.preventDefault();
         
@@ -20,6 +22,7 @@ $(document).ready(function () {
             method: "POST",
             data: {
                 "NOME": $(this).find("#Nome").val(),
+                "CPF": $(this).find("#CPF").val(),
                 "CEP": $(this).find("#CEP").val(),
                 "Email": $(this).find("#Email").val(),
                 "Sobrenome": $(this).find("#Sobrenome").val(),
@@ -27,7 +30,8 @@ $(document).ready(function () {
                 "Estado": $(this).find("#Estado").val(),
                 "Cidade": $(this).find("#Cidade").val(),
                 "Logradouro": $(this).find("#Logradouro").val(),
-                "Telefone": $(this).find("#Telefone").val()
+                "Telefone": $(this).find("#Telefone").val(),
+                "Beneficiarios": beneficiariosClienteAtual,
             },
             error:
             function (r) {
@@ -37,14 +41,17 @@ $(document).ready(function () {
                     ModalDialog("Ocorreu um erro", "Ocorreu um erro interno no servidor.");
             },
             success:
-            function (r) {
-                ModalDialog("Sucesso!", r)
-                $("#formCadastro")[0].reset();                                
-                window.location.href = urlRetorno;
+                function (r) {
+                    if (r.Success == false) {
+                        ModalDialog("Ocorreu um erro", r.Message);
+                    } else {
+                        ModalDialog("Sucesso!", r)
+                        $("#formCadastro")[0].reset();
+                        window.location.href = urlRetorno;
+                    }              
             }
         });
-    })
-    
+    })    
 })
 
 function ModalDialog(titulo, texto) {

@@ -1,18 +1,24 @@
 ﻿
 <form id="formCadastro" method="post">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="form-group">
                 <label for="Nome">Nome:</label>
                 <input required="required" type="text" class="form-control" id="Nome" name="Nome" placeholder="Ex.: João" maxlength="50">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Sobrenome">Sobrenome:</label>
+                <input required="required" type="text" class="form-control" id="Sobrenome" name="Sobrenome" placeholder="Ex.: da Silva" maxlength="255">
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label for="Sobrenome">Sobrenome:</label>
-                <input required="required" type="text" class="form-control" id="Sobrenome" name="Sobrenome" placeholder="Ex.: da Silva" maxlength="255">
+                <label for="CPF">CPF:</label>
+                <input oninput="mascaraCPF(this)" required="required" type="text" class="form-control" id="CPF" name="CPF" placeholder="Ex.: 010,011,111-00" maxlength="14">
             </div>
         </div>
         <div class="col-md-6">
@@ -80,6 +86,86 @@
             </div>
         </div>
     </div>
-
-
 </form>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="pull-left">
+            <button type="button" id="btnBeneficiariosModal" class="btn btn-info" data-toggle="modal" data-target="#beneficiariosModal">
+                Beneficiários
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="beneficiariosModal" tabindex="-1" role="dialog" aria-labelledby="beneficiariosModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="beneficiariosModalLabel">Beneficiários</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-row mb-3">
+                    <div class="col-md-5">
+                        <label for="cpfNovoBeneficiario">CPF:</label>
+                        <input type="text" oninput="mascaraCPF(this)" id="cpfNovoBeneficiario" class="form-control" placeholder="Ex: 010.011.111-00">
+                    </div>
+                    <div class="col-md-5">
+                        <label for="nomeNovoBeneficiario">Nome:</label>
+                        <input type="text" id="nomeNovoBeneficiario" class="form-control" placeholder="Ex: Maria">
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="button" class="btn btn-success btn-block" id="btnIncluirBeneficiario">Incluir</button>
+                    </div>
+                </div>
+
+                <hr>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>CPF</th>
+                            <th>Nome</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaBeneficiariosBody">
+                  
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section scripts{
+
+    <script>
+        var vOld = "";
+        function mascaraCPF(i) {
+
+            var v = i.value;
+            if (vOld.length <= v.length) {
+                i.setAttribute("maxlength", "14");
+                if (v.length == 3 || v.length == 7) i.value += ".";
+                if (v.length == 11) i.value += "-";
+            }
+            vOld = v;
+        }
+    </script>
+
+    @Scripts.Render("~/bundles/beneficiario")
+}

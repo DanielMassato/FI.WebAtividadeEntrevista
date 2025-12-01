@@ -14,7 +14,7 @@ namespace FI.AtividadeEntrevista.BLL
         /// <param name="cliente">Objeto de cliente</param>
         public long Incluir(DML.Cliente cliente)
         {
-            DAL.DaoCliente cli = new DAL.DaoCliente();
+            DAL.DaoCliente cli = new DAL.DaoCliente();            
             return cli.Incluir(cliente);
         }
 
@@ -33,10 +33,10 @@ namespace FI.AtividadeEntrevista.BLL
         /// </summary>
         /// <param name="id">id do cliente</param>
         /// <returns></returns>
-        public DML.Cliente Consultar(long id)
+        public DML.Cliente Consultar(long id = 0, string cpf = "")
         {
             DAL.DaoCliente cli = new DAL.DaoCliente();
-            return cli.Consultar(id);
+            return cli.Consultar(id, cpf);
         }
 
         /// <summary>
